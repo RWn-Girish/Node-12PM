@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <nav>
+        <a href="/">Book</a>
+        <a href="/users">Users</a>
+    </nav>
+    <div align="center">
+        <h2>Add Book Details</h2>
+        <form method="post" action="/add-book" enctype="multipart/form-data">
+            <table>
+                <tr>
+                    <td>Title: </td>
+                    <td><input type="text" name="title" /></td>
+                </tr>
+                <tr>
+                    <td>Price: </td>
+                    <td><input type="number" name="price" /></td>
+                </tr>
+                <tr>
+                    <td>Quantity: </td>
+                    <td><input type="number" name="quantity" /></td>
+                </tr>
+                <tr>
+                    <td>Category</td>
+                    <td>
+                        <select name="category">
+                            <option value="">Select Category</option>
+                            <option value="Education">Education</option>
+                            <option value="Entertainment">Entertainment</option>
+                            <option value="Comedy">Comedy</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Description</td>
+                    <td><textarea name="description"></textarea></td>
+                </tr>
+                <tr>
+                    <td>Upload Image</td>
+                    <td><input type="file" name="productImg" /></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><input type="submit" value="Add Book" /></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+    <br>
+    <hr>
+    <div align="center">
+        <a href="/">All</a>
+        <a href="/?category=Education">Education</a>
+        <a href="/?category=Entertainment">Entertainment</a>
+        <a href="/?category=Comedy">Comedy</a>
+        <br>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Category</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Image</th>
+                    <th colspan="2">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% allBooks.map((book, index) => { %>
+                    <tr>
+                        <td><%= index + 1 %></td>
+                        <td><%= book.title %></td>
+                        <td><%= book.description %></td>
+                        <td><%= book.category %></td>
+                        <td><%= book.price %></td>
+                        <td><%= book.quantity %></td>
+                        <td><img src="<%= book.productImg %>" alt="<%= book.title %>" height="100" width="100" /></td>
+                        <td><a href="/edit-book/<%= book.id %>"><button>Edit</button></a></td>
+                        <td><a href="/delete-book/<%= book.id %>"><button>Delete</button></a></td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

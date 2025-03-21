@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div align="center" class="addData">
+        <h3>Add User Detail</h3>
+        <form method="post" action="/add-user">
+            <table>
+                <tr>
+                    <td>Id: </td>
+                    <td><input type="text" name="id" /></td>
+                </tr>
+                <tr>
+                    <td>Firstname: </td>
+                    <td><input type="text" name="firstname" /></td>
+                </tr>
+                <tr>
+                    <td>Lastname: </td>
+                    <td><input type="text" name="lastname" /></td>
+                </tr>
+                <tr>
+                    <td>Email: </td>
+                    <td><input type="text" name="email" /></td>
+                </tr>
+                <tr>
+                    <td>Phone: </td>
+                    <td><input type="text" name="phone" /></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><input type="submit" value="Add User" /></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+    <div class="getData">
+        <h3 align="center">Users Infromation</h3>
+    <table align="center" border="1">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Firstname</th>
+                <th>Lastname</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th colspan="2">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% users.map((user)=> { %>
+                <tr>
+                    <td><%= user.id %></td>
+                    <td><%= user.firstname %></td>
+                    <td><%= user.lastname %></td>
+                    <td><%= user.email %></td>
+                    <td><%= user.phone %></td>
+                    <td><a href="/edit/<%= user.id %>"><button>Edit</button></a></td>
+                    <td><a href="/delete/<%= user.id %>"><button>Delete</button></a></td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+    </div>
+</body>
+</html>
