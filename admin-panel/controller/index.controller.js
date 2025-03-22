@@ -1,5 +1,9 @@
 const Admin = require("../models/admin.model")
 
+exports.logout = async (req, res) => {
+    res.clearCookie("admin");
+    return res.redirect("/")
+}
 exports.loginPage = async (req, res) => {
     if(req.cookies && req.cookies.admin && req.cookies.admin._id){
         return res.redirect("/dashboard")
@@ -11,7 +15,8 @@ exports.dashBoard = async (req, res) => {
     if(req.cookies == null || req.cookies.admin == undefined || req.cookies.admin._id == undefined){
         return res.redirect("/");
     }else{
-        return res.render('dashboard')
+        let admin = await Admin.findById(req.cookies.admin._id)
+        return res.render('dashboard', {admin})
     }
 }
 
@@ -34,6 +39,16 @@ exports.loginAdmin = async (req, res) => {
             return res.redirect("back");
         }
     } catch (error) {
+        return res.redirect("back");
+    }
+}
+
+
+exports.forgotPasswordPage = (req, res) => {
+    try {
+        return res.render('forgotPassword/forgotpassword');
+    } catch (error) {
+        console.log(error);
         return res.redirect("back");
     }
 }
