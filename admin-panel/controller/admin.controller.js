@@ -36,8 +36,7 @@ exports.addNewAdmin = async (req, res) => {
       imagePath = `/uploads/${req.file.filename}`;
       req.body.image = imagePath;
     }
-
-    let admin = await Admin.create(req.body);
+    let admin = await Admin.create({...req.body});
     return res.redirect("back");
   } catch (error) {
     console.log(error);
