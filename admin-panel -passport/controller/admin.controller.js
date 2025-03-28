@@ -7,17 +7,8 @@ exports.addAdminPage = async (req, res) => {
 };
 
 exports.viewAllAdminPage = async (req, res) => {
-  if (
-    req.cookies == null ||
-    req.cookies.admin == undefined ||
-    req.cookies.admin._id == undefined
-  ) {
-    return res.redirect("/");
-  } else {
-    let loginAdmin = await Admin.findById(req.cookies.admin._id)
     let admins = await Admin.find();
-    return res.render("view_all_admin", { admins, admin: loginAdmin });
-  }
+    return res.render("view_all_admin", { admins});
 };
 
 exports.addNewAdmin = async (req, res) => {

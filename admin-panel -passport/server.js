@@ -7,7 +7,6 @@ const session = require('express-session');
 const passport = require('passport');
 const localSt = require("./config/passportStr");
 
-
 const app = express();
 
 // middleware
@@ -29,6 +28,7 @@ app.use(session({
 
 app.use(passport.session());
 app.use(passport.initialize());
+app.use(passport.setAuthenticateUser);
 
 // routes
 app.use("/", require('./routes/index.routes'));

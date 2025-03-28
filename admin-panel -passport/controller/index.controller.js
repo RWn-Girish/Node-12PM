@@ -2,8 +2,13 @@ const { sendMail } = require("../config/mailConfig");
 const Admin = require("../models/admin.model")
 
 exports.logout = async (req, res) => {
-    res.clearCookie("admin");
-    return res.redirect("/")
+    req.session.destroy((err)=> {
+        if(err){
+            console.log(err)
+            return false;
+        }
+        return res.redirect("/");
+    })
 }
 exports.loginPage = async (req, res) => {
     if(req.isAuthenticated()){
@@ -15,6 +20,7 @@ exports.loginPage = async (req, res) => {
 
 
 exports.dashBoard = async (req, res) => {
+    console.log("user: ", req.user);
         return res.render('dashboard')
 }
 

@@ -2,9 +2,9 @@ const express = require('express');
 const adminRoutes = express.Router();
 const {addAdminPage, viewAllAdminPage, addNewAdmin, editAdminPage, updateAdmin} = require("../controller/admin.controller");
 const Admin = require('../models/admin.model');
-const passport = require('passport');
 
-adminRoutes.get("/add-admin", passport.checkAuthenticated, addAdminPage);
+
+adminRoutes.get("/add-admin",  addAdminPage);
 
 adminRoutes.get("/view-admins", viewAllAdminPage);
 
