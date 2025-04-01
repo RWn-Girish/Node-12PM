@@ -7,7 +7,8 @@ exports.addAdminPage = async (req, res) => {
 };
 
 exports.viewAllAdminPage = async (req, res) => {
-    let admins = await Admin.find();
+
+    let admins = await Admin.find({});
     return res.render("view_all_admin", { admins});
 };
 

@@ -20,7 +20,7 @@ exports.loginPage = async (req, res) => {
 
 
 exports.dashBoard = async (req, res) => {
-    console.log("user: ", req.user);
+    // console.log("user: ", req.user);
         return res.render('dashboard')
 }
 
@@ -84,7 +84,7 @@ exports.verifyOTP = async (req, res) => {
 };
 
 
-exports.changePassword = async (req, res) => {
+exports.resetPassword = async (req, res) => {
     try {
         // console.log(req.body);
         let password = req.body.password;
@@ -105,6 +105,46 @@ exports.changePassword = async (req, res) => {
             }
         }else{
             console.log("Password & Confirm password is not matched....");
+            return res.redirect("back");
+        }
+    } catch (error) {
+        console.log(error);
+        return res.redirect("back");
+    }
+}
+
+
+exports.changePasswordPage = async (req, res) => {
+    try {
+        return res.render("changepassword")
+    } catch (error) {
+        console.log(error);
+        return res.redirect("back");
+    }
+}
+
+exports.changePassword = async (req, res) => {
+    try {
+        const {newpass, currentPass, confpass} = req.body;
+        const user = req.user;
+
+        if(currentPass == user.password){
+            if(currentPass != newpass){
+                if(newpass == confpass){
+                    await Admin.findByIdAndUpdate(user._id, {password: newpass}, {new: true});
+                    console.log("Password was Changed Success....");
+                    return res.redirect("/dashboard")
+                }else{
+                    console.log("New password and Confirm password is not matched!!!!");
+                    return res.redirect("back");
+                }
+
+            }else{
+                console.log("Current password and New password is Same!!!!");
+                return res.redirect("back");
+            }
+        }else{
+            console.log("Current password and user password is not matched!!!!");
             return res.redirect("back");
         }
     } catch (error) {
