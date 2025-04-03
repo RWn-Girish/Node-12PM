@@ -11,7 +11,7 @@ exports.logout = async (req, res) => {
     })
 }
 exports.loginPage = async (req, res) => {
-    if(req.isAuthenticated()){
+    if(req.isAuthenticated()){ 
         return res.redirect("/dashboard")
     }else{
         return res.render('login')
@@ -27,6 +27,7 @@ exports.dashBoard = async (req, res) => {
 
 exports.loginAdmin = async (req, res) => {
     try {
+        req.flash("success", "Login Success");
         return res.redirect("/dashboard")
     } catch (error) {
         return res.redirect("back");

@@ -33,6 +33,14 @@
                         <div class="card">
                             <form class="form-horizontal" action="/admin/add-admin" method="post" enctype="multipart/form-data">
                                 <div class="card-body">
+                                    <% if(locals.flash.success && locals.flash.success.length > 0) { %>
+                                        <div class="alert alert-success"><%= locals.flash.success %></div>
+                                    <% } %>
+                                    <% if(locals.flash.error && locals.flash.error.length > 0) { %>
+                                        <div class="alert alert-dangor"><%= locals.flash.error %></div>
+                                    <% } %>
+
+
                                     <h4 class="card-title">Personal Info</h4>
                                     <div class="form-group row">
                                         <label for="fname" class="col-sm-3 text-right control-label col-form-label">First Name</label>
@@ -130,4 +138,4 @@
             <!-- End Container fluid  -->
             <!-- ============================================================== -->
             <!-- ============================================================== -->
-<%- include('footer') %>            
+<%- include('footer') %>     

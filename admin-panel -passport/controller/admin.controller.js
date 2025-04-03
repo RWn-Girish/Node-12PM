@@ -21,6 +21,7 @@ exports.addNewAdmin = async (req, res) => {
     }
 
     let admin = await Admin.create(req.body);
+    req.flash("success", 'New Admin Added Success');
     return res.redirect("back");
   } catch (error) {
     console.log(error);
@@ -60,8 +61,10 @@ exports.updateAdmin = async (req, res) => {
         new: true,
       });
       if (updateAdmin) {
+        req.flash("success", "Update Admin Success");
         return res.redirect("/admin/view-admins");
       } else {
+        req.flash("error", "Somthing Wrong");
         return res.redirect("back");
       }
     } else {
