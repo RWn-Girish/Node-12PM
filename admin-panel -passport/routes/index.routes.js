@@ -20,6 +20,7 @@ routes.get("/change-password", passport.checkAuthenticated, changePasswordPage);
 routes.post("/change-password", passport.checkAuthenticated, changePassword);
 
 routes.use("/admin", passport.checkAuthenticated, require('./admin.routes'))
+routes.use("/category", passport.checkAuthenticated, require('./category.routes'))
 
 
 module.exports = routes;
