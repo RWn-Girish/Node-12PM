@@ -6,7 +6,7 @@
             <div class="page-breadcrumb">
                 <div class="row">
                     <div class="col-12 d-flex no-block align-items-center">
-                        <h4 class="page-title">Tables</h4>
+                        <h4 class="page-title">Form Basic</h4>
                         <div class="ml-auto text-right">
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb">
@@ -29,37 +29,46 @@
                 <!-- Start Page Content -->
                 <!-- ============================================================== -->
                 <div class="row">
-                    <div class="col-12">
+                    <div class="col-md-6">
                         <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title m-b-0">Category Information</h5>
-                            </div>
-                            <table class="table">
-                                  <thead>
-                                    <tr>
-                                      <th scope="col">#</th>
-                                      <th scope="col">Category Name</th>
-                                      <th scope="col">Category Image</th>
-                                      <th scope="col">Actions</th>
-                                    </tr>
-                                  </thead>
-                                  <tbody>
-                                   <% categories.map((category, i)=> { %>    
-                                    <tr>
-                                        <td><%= i + 1 %></td>
-                                        <td><%= category.category %></td>
-                                        <td><img src="<%= category.categoryImage %>" height="100" width="100" /></td>
-                                        <td><a href="/"><i class="fas fa-edit"></i></a> &nbsp; || &nbsp; <a href="/category/delete-category/<%= category._id %>"><i class="fas fa-trash"></i></a></td>
-                                      </tr>
-                                   <% }) %>
-                                  </tbody>
-                            </table>
+                            <form class="form-horizontal" action="/subCategory/" method="post">
+                                <div class="card-body">
+                                    <h4 class="card-title">Edit Sub Category Info</h4>
+                                    <div class="form-group row">
+                                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">Category Name</label>
+                                        <div class="col-sm-9">
+                                            <select class="form-control" name="category" >
+                                                <option value="">Select Category</option>
+                                                <% categories.forEach((cat) => { %>
+                                                    <option value="<%= cat.id %>"  <% if(cat.id == subCategory.category){ %> selected <% } %> > <%= cat.category %> </option>
+                                                <% }) %>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    
+                                    
+                                    <div class="form-group row">
+                                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">Sub Category Name</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" id="fname" name="subCategory" value="<%= subCategory.subCategory %>" >
+                                        </div>
+                                    </div>
+
+                                    
+                                </div>
+                                <div class="border-top">
+                                    <div class="card-body">
+                                        <button type="submit" class="btn btn-primary">Update Sub Category</button>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
-                      
                         
-                        
+
                     </div>
+                    
                 </div>
+                
                 <!-- ============================================================== -->
                 <!-- End PAge Content -->
                 <!-- ============================================================== -->
@@ -74,4 +83,5 @@
             <!-- ============================================================== -->
             <!-- End Container fluid  -->
             <!-- ============================================================== -->
-<%- include('../footer') %>
+            <!-- ============================================================== -->
+<%- include('../footer') %>     

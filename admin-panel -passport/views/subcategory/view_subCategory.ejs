@@ -32,7 +32,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <h5 class="card-title m-b-0">Category Information</h5>
+                                <h5 class="card-title m-b-0">Sub Category Information</h5>
                             </div>
                             <table class="table">
                                   <thead>
@@ -40,17 +40,19 @@
                                       <th scope="col">#</th>
                                       <th scope="col">Category Name</th>
                                       <th scope="col">Category Image</th>
+                                      <th scope="col">Sub Category Name</th>
                                       <th scope="col">Actions</th>
                                     </tr>
                                   </thead>
                                   <tbody>
-                                   <% categories.map((category, i)=> { %>    
-                                    <tr>
-                                        <td><%= i + 1 %></td>
-                                        <td><%= category.category %></td>
-                                        <td><img src="<%= category.categoryImage %>" height="100" width="100" /></td>
-                                        <td><a href="/"><i class="fas fa-edit"></i></a> &nbsp; || &nbsp; <a href="/category/delete-category/<%= category._id %>"><i class="fas fa-trash"></i></a></td>
-                                      </tr>
+                                   <% subCategories.map((subCate, i)=> { %>
+                                        <tr>
+                                            <td><%= i+1 %></td>
+                                            <td><%= subCate.category.category %></td>
+                                            <td><img src="<%= subCate.category.categoryImage %>" height="80" /></td>
+                                            <td><%= subCate.subCategory %></td>
+                                            <td><a href="/subCategory/edit-subcategory/<%= subCate._id %>"><i class="fas fa-edit"></i></a> &nbsp; || &nbsp; <a href="/subCategory/delete-subcategory/<%= subCate._id %>"><i class="fas fa-trash"></i></a> </td>
+                                        </tr>
                                    <% }) %>
                                   </tbody>
                             </table>

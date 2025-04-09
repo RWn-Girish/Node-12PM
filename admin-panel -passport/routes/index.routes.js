@@ -21,6 +21,7 @@ routes.post("/change-password", passport.checkAuthenticated, changePassword);
 
 routes.use("/admin", passport.checkAuthenticated, require('./admin.routes'))
 routes.use("/category", passport.checkAuthenticated, require('./category.routes'))
+routes.use("/subCategory", passport.checkAuthenticated, require('./subCategory.routes'))
 
 
 module.exports = routes;
