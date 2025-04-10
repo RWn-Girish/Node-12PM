@@ -73,3 +73,22 @@ exports.editSubCategoryPage = async (req, res) => {
     return res.redirect("back");
   }
 };
+
+exports.updateSubCategory = async (req, res) => {
+  try {
+    let id = req.params.id;
+    let subcategory = await SubCategory.findById(id);
+    if(subcategory){
+      await SubCategory.findByIdAndUpdate(id, req.body, {new: true});
+      req.flash("success", "SubCategory is updated");
+      return res.redirect("/subCategory/view-subCategory");
+    }else {
+      req.flash("error", "SubCategory is not Found...");
+      return res.redirect("back");
+    }
+  } catch (error) {
+    console.log(error);
+    req.flash("error", "Somthing Wrong!!!");
+    return res.redirect("back");
+  }
+}

@@ -31,16 +31,16 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="card">
-                            <form class="form-horizontal" action="/subCategory/update-subcategory/<%= subCategory._id %>" method="post">
+                            <form class="form-horizontal" action="/extracategory/add-extraCategory" method="post">
                                 <div class="card-body">
-                                    <h4 class="card-title">Edit Sub Category Info</h4>
+                                    <h4 class="card-title">Extra Category Info</h4>
                                     <div class="form-group row">
                                         <label for="fname" class="col-sm-3 text-right control-label col-form-label">Category Name</label>
                                         <div class="col-sm-9">
-                                            <select class="form-control" name="category" >
+                                            <select class="form-control" name="categoryId" >
                                                 <option value="">Select Category</option>
-                                                <% categories.forEach((cat) => { %>
-                                                    <option value="<%= cat.id %>"  <% if(cat.id == subCategory.category){ %> selected <% } %> > <%= cat.category %> </option>
+                                                <% categories.map((cat) => { %>
+                                                    <option value="<%= cat._id %>"><%= cat.category %></option>
                                                 <% }) %>
                                             </select>
                                         </div>
@@ -50,7 +50,20 @@
                                     <div class="form-group row">
                                         <label for="fname" class="col-sm-3 text-right control-label col-form-label">Sub Category Name</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control" id="fname" name="subCategory" value="<%= subCategory.subCategory %>" >
+                                            <select class="form-control" name="subCategoryId" >
+                                                <option value="">Select Sub Category</option>
+                                                <% subCategories.map((cat) => { %>
+                                                    <option value="<%= cat._id %>"><%= cat.subCategory %></option>
+                                                <% }) %>
+                                            </select>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group row">
+                                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">Extra Category Name</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" id="fname" name="extraCategory" placeholder="Extra Category Name Here">
                                         </div>
                                     </div>
 
@@ -58,7 +71,7 @@
                                 </div>
                                 <div class="border-top">
                                     <div class="card-body">
-                                        <button type="submit" class="btn btn-primary">Update Sub Category</button>
+                                        <button type="submit" class="btn btn-primary">Add Extra Category</button>
                                     </div>
                                 </div>
                             </form>
