@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filpkart Clone</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
+</head>
+<body>
+
+    <header>
+        <h3>Header Section</h3>
+        <p>User Login</p>
+    </header>
+
+    <div class="container-fluid">
+        <!-- Search Form -->
+<div class="mb-4 text-center">
+    <form method="GET" action="/user" class="form-inline justify-content-center">
+        <input type="text" name="search" class="form-control mr-2" placeholder="Search products..." value="<%= typeof search !== 'undefined' ? search : '' %>">
+        <button type="submit" class="btn btn-outline-primary">Search</button>
+    </form>
+</div>
+        <!-- Category Buttons -->
+        <div class="mb-4 text-center">
+            <% 
+                const colors = ['primary', 'success', 'danger', 'info', 'warning', 'dark'];
+            %>
+                <a class="btn btn-dark mr-2 mb-2" href="/user">
+                    All
+                </a>
+            <%
+                categories.forEach((category, index) => { 
+                    const colorClass = colors[index % colors.length]; 
+            %>
+                <a class="btn btn-<%= colorClass %> mr-2 mb-2" href="/user?category=<%= category._id %>">
+                    <%= category.category %>
+                </a>
+            <% }); %>
+        </div>
+        <!-- Product Grid -->
+        <div class="row">
+            <% allProducts.forEach((product) => { %>
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 shadow-sm border-0">
+                        <img src="<%= product.productImage %>" class="card-img-top" alt="<%= product.title %>" style="height: 200px; object-fit: cover;">
+                        <div class="card-body">
+                            <h5 class="card-title"><%= product.title %></h5>
+                            <p class="card-text text-muted"><%= product.category.category || 'Uncategorized' %></p>
+                            <p class="card-text"><%= product.desc.length > 100 ? product.desc.substring(0, 100) + '...' : product.desc %></p>
+                            <h6 class="text-success font-weight-bold">₹ <%= product.price %></h6>
+                        </div>
+                        <div class="card-footer bg-transparent border-0 text-right">
+                            <a href="/user/single-product/<%= product._id %>" class="btn btn-primary btn-sm">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            <% }); %>
+        </div>
+    </div>
+</div>
+</body>
+</html>

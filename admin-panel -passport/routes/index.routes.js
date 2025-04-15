@@ -3,7 +3,10 @@ const routes = express.Router();
 const {dashBoard, loginPage, loginAdmin, logout, forgotPasswordPage, sendEmail, verifyOTP, changePasswordPage, resetPassword, changePassword} = require("../controller/index.controller");
 const passport = require('passport');
 
+// User Side
+routes.use("/user", require("./user.routes"));
 
+// Admin Side
 routes.get("/", loginPage);
 routes.get("/dashboard", passport.checkAuthenticated, dashBoard);
 
@@ -23,6 +26,7 @@ routes.use("/admin", passport.checkAuthenticated, require('./admin.routes'))
 routes.use("/category", passport.checkAuthenticated, require('./category.routes'))
 routes.use("/subCategory", passport.checkAuthenticated, require('./subCategory.routes'))
 routes.use("/extracategory", passport.checkAuthenticated, require('./extraCategory.routes'))
+routes.use("/product", passport.checkAuthenticated, require('./product.routes'))
 
 
 module.exports = routes;
