@@ -45,3 +45,22 @@ exports.signleProduct = async (req, res) =>{
         return res.redirect("back");
       }
 }
+
+
+// exports.addToFavorite = async (req, res) => {
+//   let userId = req.user._id;
+//   let productId = req.params.id;
+
+//   await Favorite.create({
+//     user: userId,
+//     productId: productId
+//   })
+// }
+// exports.getAllFavorites = async (req, res) => {
+//   let userId = req.user._id;
+
+//   let allFavorites = await Favorite.find({
+//     user: userId,
+//   }).populate("user").populate("productId")
+//   render
+// }

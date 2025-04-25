@@ -44,7 +44,7 @@ exports.getAllProducts = async (req, res) => {
     let filter = {};
 
     if (category) {
-        filter['category._id'] = category;
+        filter['category'] = category;
     }
 
     if (search) {
