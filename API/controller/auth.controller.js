@@ -55,3 +55,35 @@ exports.loginAdmin = async (req, res) => {
         return res.status(500).json({message: "Internal Server Error"});
     }
 }
+
+exports.myProfile = async (req, res) => {
+    return res.json({message: "Profile Page", data: req.user});
+}
+
+
+exports.changePassword = async(req, res) => {
+    try {
+        let user = req.user;
+        const {current_password, new_password, confirm_password} = req.body;
+
+        let matchPass = await bcrypt.compare(current_password, user.password);
+        if(!matchPass){
+            return res.json({message: 'Current Password is not matched!!!'});
+        }else{
+            if(current_password != new_password){
+                if(new_password == confirm_password){
+                    let hashPassword = await bcrypt.hash(new_password, 10);
+                    await Admin.findByIdAndUpdate(user._id, {password: hashPassword}, {new: true});
+                    return res.json({message: "Password Changed Success"});
+                }else{
+                    return res.json({message: 'Confirm Password and New Password is not matched!!!'});
+                }
+
+            }else{
+                return res.json({message: 'Current Password and New Password is matched!!!'});
+            }
+        }
+    } catch (error) {
+        
+    }
+}
