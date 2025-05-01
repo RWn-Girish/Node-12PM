@@ -1,5 +1,5 @@
 const express = require('express');
-const { registerAdmin, loginAdmin, myProfile, changePassword, addManager, viewAllManager, deleteManager } = require('../controller/admin.controller');
+const { registerAdmin, loginAdmin, myProfile, changePassword, addManager, viewAllManager, deleteManager, activateManager } = require('../controller/admin.controller');
 const routes = express.Router();
 const uploadImage = require("../middleware/uploadImage");
 const { verifyAdminToken } = require('../middleware/verifyToken');
@@ -14,7 +14,9 @@ routes.post("/change-password", verifyAdminToken, changePassword);
 
 routes.post("/add-manager", verifyAdminToken, uploadImage.single('profileImage'), addManager)
 routes.get("/view-manager", verifyAdminToken, viewAllManager)
-routes.delete("/delete-manager/:id", verifyAdminToken, deleteManager)
+routes.delete("/delete-manager/:id", verifyAdminToken, deleteManager);
+routes.put("/activate-manager/:id", verifyAdminToken, activateManager);
+
 
 
 module.exports = routes;

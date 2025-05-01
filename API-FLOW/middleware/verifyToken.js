@@ -3,7 +3,11 @@ const jwt = require("jsonwebtoken");
 const Manager = require("../models/manager.model");
 
 exports.verifyAdminToken = async (req, res, next) => {
-  let token = req.headers["authorization"].split(" ")[1];
+  let authorization = req.headers["authorization"];
+  if(!authorization){
+    return res.status(500).json({message: 'token not found'});
+  }
+  let token = authorization.split(" ")[1];
 
   if (!token) {
     return res.status(400).json({ message: "Please Login Again" });
@@ -20,7 +24,11 @@ exports.verifyAdminToken = async (req, res, next) => {
 };
 
 exports.verifyManagerToken = async (req, res, next) => {
-  let token = req.headers["authorization"].split(" ")[1];
+  let authorization = req.headers["authorization"];
+  if(!authorization){
+    return res.status(500).json({message: 'token not found'});
+  }
+  let token = authorization.split(" ")[1];
 
   if (!token) {
     return res.status(400).json({ message: "Please Login Again" });

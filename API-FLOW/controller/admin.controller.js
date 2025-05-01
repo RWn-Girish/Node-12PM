@@ -107,27 +107,64 @@ exports.changePassword = async (req, res) => {
   }
 };
 
-
 exports.addManager = async (req, res) => {
   try {
-    let { firstname, lastname, email, password, gender, profileImage} = req.body;
-    let manager = await Manager.findOne({email: email, isDelete: false});
+    let { firstname, lastname, email, password, gender, profileImage } =
+      req.body;
+    let manager = await Manager.findOne({ email: email, isDelete: false });
 
-    if(manager){
-      return res.status(400).json({message: "Manager already exist"});
+    if (manager) {
+      return res.status(400).json({ message: "Manager already exist" });
     }
 
-    if(req.file){
+    if (req.file) {
       profileImage = `/uploads/${req.file.filename}`;
     }
     let hashPassword = await bcrypt.hash(password, 10);
 
     manager = await Manager.create({
-      firstname, lastname, email, gender, password: hashPassword, profileImage
-    })
+      firstname,
+      lastname,
+      email,
+      gender,
+      password: hashPassword,
+      profileImage,
+    });
     await sendMail(email, password);
-    return res.status(201).json({message: "New Manager Added Success"});
-    
+    return res.status(201).json({ message: "New Manager Added Success" });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
+exports.viewAllManager = async (req, res) => {
+  try {
+    let managers = await Manager.find({ isDelete: false });
+    res.cookie("hello", "admin");
+    res.cookie("hello1", "admin");
+    return res
+      .status(200)
+      .json({ message: "All Manager Fetch Success", data: managers });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
+exports.deleteManager = async (req, res) => {
+  try {
+    let id = req.params.id;
+    let manager = await Manager.findOne({ _id: id, isDelete: false });
+    if (!manager) {
+      return res.status(404).json({ message: "Manager Not Found" });
+    }
+    manager = await Manager.findByIdAndUpdate(
+      id,
+      { isDelete: true },
+      { new: true }
+    );
+    return res.status(200).json({ message: "Delete Success" });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: "Internal Server Error" });
@@ -135,28 +172,28 @@ exports.addManager = async (req, res) => {
 };
 
 
-exports.viewAllManager = async (req, res) => {
-  try {
-    let managers = await Manager.find();
-    return res.status(200).json({message: "All Manager Fetch Success", data: managers})
-  } catch (error) {
-    console.log(error);
-    return res.status(500).json({ message: "Internal Server Error" });
-  }
-}
-
-
-exports.deleteManager = async (req, res) => {
+exports.activateManager = async (req, res) => {
   try {
     let id = req.params.id;
-    let manager = await Manager.findOne({_id: id, isDelete: false});
+    // let manager = await Manager.findOne({ _id: id, isDelete: true });
+    // if (!manager) {
+    //   return res.status(404).json({ message: "Manager Not Found || Manager already Activated" });
+    // }
+    let manager = await Manager.findById(id);
     if(!manager){
-      return res.status(404).json({message: "Manager Not Found"})
+      return res.status(404).json({ message: "Manager Not Found" });
     }
-    manager = await Manager.findByIdAndUpdate(id, {isDelete: true}, {new: true})
-    return res.status(200).json({message: "Delete Success"})
+    if(manager.isDelete == false){
+      return res.status(404).json({ message: "Manager already Activated" });
+    }
+    manager = await Manager.findByIdAndUpdate(
+      id,
+      { isDelete: false },
+      { new: true }
+    );
+    return res.status(200).json({ message: "Manager is Activated Success" });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: "Internal Server Error" });
   }
-}
+};
